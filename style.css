@@ -1,0 +1,48 @@
+body {
+    background-color: #e2bcbc;
+    margin: 40px;
+    font-family: Arial;
+}
+
+.container {
+    background-color: rgb(244, 220, 220);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.titulo {
+    color: #2c3e50;
+    text-align: center;
+}
+
+.foto {
+    width: 200px;
+    border-radius: 50%;
+    border: 3px solid #2c3e50;
+    padding: 5px;
+    display: block;
+    margin: auto;
+}
+
+#nome {
+    text-align: center;
+    font-weight: bold;
+}
+
+.subtitulo {
+    color: #0b3052;
+}
+
+.lista {
+    background-color: #ede7eb;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.lista li {
+    margin-bottom: 10px;
+}
+
+.lista li:hover {
+    color: #e73f3c;
+}
