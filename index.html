@@ -1,41 +1,441 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Sobre mim</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ana Clara Esperança — Ciência da Computação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fdf6fb;
+    --pink:#f6c9e0;
+    --pink-deep:#d9679f;
+    --lilac:#ddcdf6;
+    --lilac-deep:#8e6fc9;
+    --ink:#4a3b57;
+    --muted:#8d7d9b;
+    --white:#ffffff;
+  }
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Quicksand', sans-serif;
+    line-height:1.65;
+  }
+
+  ::selection{ background:var(--pink); color:var(--ink); }
+
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; font-weight:700; margin:0; color:var(--ink); }
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px; }
+
+  header.top{
+    position:sticky; top:0; z-index:10;
+    background:rgba(253,246,251,0.88);
+    backdrop-filter:blur(8px);
+  }
+  .topbar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 24px; max-width:920px; margin:0 auto;
+  }
+  .mark{ font-family:'Baloo 2', sans-serif; font-weight:700; font-size:1.15rem; color:var(--pink-deep); }
+  nav{ display:flex; gap:6px; }
+  nav a{
+    color:var(--ink); text-decoration:none;
+    font-size:0.9rem; font-weight:600;
+    padding:8px 16px; border-radius:999px;
+  }
+  nav a:hover{ background:var(--pink); }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:70px 0 70px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    gap:40px;
+  }
+  .blob{
+    position:absolute; border-radius:50%; filter:blur(2px); z-index:-1;
+  }
+  .blob1{ width:260px; height:260px; background:var(--pink); opacity:0.55; top:-60px; right:-60px; }
+  .blob2{ width:180px; height:180px; background:var(--lilac); opacity:0.6; bottom:-40px; left:-40px; }
+
+  .hero .photo{
+    flex-shrink:0;
+    width:150px; height:150px;
+    border-radius:50%;
+    border:5px solid var(--white);
+    box-shadow:0 0 0 4px var(--pink);
+    object-fit:cover;
+  }
+
+  .hero .kicker{
+    display:inline-block;
+    font-weight:700; font-size:0.85rem;
+    color:var(--lilac-deep);
+    background:var(--white);
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2rem, 5vw, 3rem);
+    max-width:13ch;
+  }
+  .hero .lede{
+    font-size:1.1rem;
+    color:var(--muted);
+    max-width:48ch;
+    margin-top:18px;
+  }
+  .hero .links{ margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; }
+  .hero .links a{
+    font-weight:700;
+    font-size:0.9rem;
+    color:var(--white);
+    text-decoration:none;
+    padding:11px 22px;
+    border-radius:999px;
+    background:var(--pink-deep);
+  }
+  .hero .links a.ghost{
+    background:var(--white); color:var(--ink);
+    border:2px solid var(--lilac);
+  }
+  .hero .links a:hover{ opacity:0.88; }
+
+  @media (max-width:640px){
+    .hero{ flex-direction:column; text-align:center; }
+    .hero .lede{ margin-left:auto; margin-right:auto; }
+    .hero .links{ justify-content:center; }
+  }
+
+  section{ padding:56px 0; }
+
+  .section-head{ margin-bottom:30px; }
+  .section-head h2{ font-size:1.7rem; }
+  .section-head p{ color:var(--muted); margin-top:6px; font-size:0.95rem; }
+
+  /* ABOUT */
+  .about-card{
+    background:var(--white);
+    border-radius:28px;
+    padding:32px;
+  }
+  .about-card p{ max-width:66ch; }
+  .about-card p + p{ margin-top:14px; }
+
+  /* SKILLS */
+  .skill-group{ margin-bottom:22px; }
+  .skill-group h3{
+    font-size:0.95rem; color:var(--lilac-deep); margin-bottom:10px;
+  }
+  .pills{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pill{
+    font-size:0.85rem;
+    font-weight:600;
+    padding:7px 15px;
+    border-radius:999px;
+    background:var(--pink);
+    color:var(--ink);
+  }
+  .pill.alt{ background:var(--lilac); }
+
+  /* PROJECTS */
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:680px){ .cards{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--white);
+    border-radius:26px;
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+  }
+  .card.featured{
+    grid-column:1 / -1;
+    background:linear-gradient(135deg, var(--pink) 0%, var(--lilac) 100%);
+  }
+  .card h3{ font-size:1.2rem; margin-bottom:8px; }
+  .card p{ margin:0 0 14px; color:var(--ink); font-size:0.95rem; }
+  .card .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .card .tags span{
+    font-size:0.72rem; font-weight:700;
+    background:rgba(255,255,255,0.7);
+    color:var(--lilac-deep);
+    padding:4px 11px; border-radius:999px;
+  }
+  .card.featured .tags span{ background:rgba(255,255,255,0.85); }
+  .card a.repo{
+    margin-top:auto;
+    align-self:flex-start;
+    font-weight:700; font-size:0.85rem;
+    color:var(--pink-deep); text-decoration:none;
+    background:var(--white);
+    padding:8px 16px; border-radius:999px;
+  }
+  .card.featured a.repo{ background:var(--ink); color:var(--white); }
+  .card a.repo:hover{ opacity:0.85; }
+
+  /* TIMELINE */
+  .timeline-item{
+    display:grid;
+    grid-template-columns: 34px 1fr;
+    gap:16px;
+    padding-bottom:26px;
+    position:relative;
+  }
+  .timeline-item::before{
+    content:'';
+    position:absolute; left:11px; top:28px; bottom:0;
+    width:2px; background:var(--lilac);
+  }
+  .timeline-item:last-child::before{ display:none; }
+  .dot{
+    width:12px; height:12px; border-radius:50%;
+    background:var(--pink-deep);
+    margin-top:5px;
+  }
+  .timeline-item .when{
+    font-size:0.8rem; font-weight:700; color:var(--lilac-deep); margin-bottom:2px;
+  }
+  .timeline-item strong{ display:block; margin-bottom:4px; }
+  .timeline-item p{ margin:0; color:var(--muted); font-size:0.92rem; }
+
+  footer{
+    padding:50px 0 80px;
+  }
+  .contact-card{
+    background:var(--white);
+    border-radius:28px;
+    padding:36px;
+    text-align:center;
+  }
+  .contact-card h2{ margin-bottom:10px; }
+  .contact-card p.blurb{ color:var(--muted); margin-bottom:24px; }
+  .contact-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+  .contact-links a{
+    font-weight:700; font-size:0.88rem;
+    text-decoration:none;
+    padding:11px 20px;
+    border-radius:999px;
+    background:var(--pink);
+    color:var(--ink);
+  }
+  .contact-links a:hover{ background:var(--lilac); }
+  footer .fine{ margin-top:30px; color:var(--muted); font-size:0.82rem; }
+</style>
 </head>
+<body>
 
-<body class="bg-gray-100 font-sans p-10">
+<header class="top">
+  <div class="topbar">
+    <span class="mark">Ana Clara ✧</span>
+    <nav>
+      <a href="#sobre">Sobre</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#pesquisa">Pesquisa</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
 
-    <div class="bg-white p-6 rounded-xl">
+<div class="wrap">
 
-        <h1 class="text-3xl text-center font-bold text-slate-700">
-            Sobre mim
-        </h1>
+  <section class="hero">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <img class="photo" src="https://github.com/naclarap.png" alt="Foto de Ana Clara">
+    <div>
+      <div class="kicker">Ouro Preto, MG</div>
+      <h1>Ana Clara Esperança</h1>
+      <p class="lede">Estudante de Ciência da Computação na Universidade Federal de Ouro Preto (UFOP), com interesse em  Engenharia de Software/ Desenvolvimento Backend.</p>
+      <div class="links">
+        <a href="#projetos">ver projetos</a>
+        <a class="ghost" href="#contato">falar comigo</a>
+      </div>
+    </div>
+  </section>
 
-        <img
-            src="https://github.com/naclarap.png"
-            class="w-48 rounded-full border-4 border-slate-700 p-1 mx-auto"
-        >
+  <section id="sobre">
+    <div class="section-head">
+      <h2>Sobre mim</h2>
+    </div>
+    <div class="about-card">
+      <p>Estou no 7º período do curso de Ciência da Computação na Universidade Federal de Ouro Preto, com previsão de formatura em 2027. Meu interesse principal é desenvolvimento backend e engenharia de software: arquitetura, testes automatizados e sistemas confiáveis.</p>
+      <p>Além dos projetos pessoais, participo de uma Iniciação Científica sobre detecção de violência em vídeos de vigilância e já conduzi outra Iniciação Científica em educação STEM. Antes da graduação, atuei na área administrativa, trabalhando com o ERP SAP.</p>
+    </div>
+  </section>
 
-        <p class="text-center font-bold">Meu nome é Ana Clara</p>
+  <section id="skills">
+    <div class="section-head">
+      <h2>Ferramentas</h2>
+    </div>
+    <div class="skill-group">
+      <h3>Linguagens</h3>
+      <div class="pills">
+        <span class="pill">Python</span>
+        <span class="pill">Java</span>
+        <span class="pill">C++</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">PostgreeSQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Frameworks &amp; bibliotecas</h3>
+      <div class="pills">
+        <span class="pill alt">Qt</span>
+        <span class="pill alt">FastAPI</span>
+        <span class="pill alt">PyTorch</span>
+        <span class="pill alt">NumPy</span>
+        <span class="pill alt">SciPy</span>
+        <span class="pill alt">scikit-image</span>
+        <span class="pill alt">React</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Ferramentas &amp; práticas</h3>
+      <div class="pills">
+        <span class="pill">Git</span>
+        <span class="pill">pytest / Qt Test</span>
+        <span class="pill">Kanban</span>
+        <span class="pill">SAP ERP</span>
+        <span class="pill"></span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Idiomas</h3>
+      <div class="pills">
+        <span class="pill alt">Inglês — Técnico</span>
+      </div>
+    </div>
+  </section>
 
-        <p class="text-center">Estudante de Ciência da Computação.</p>
+  <section id="projetos">
+    <div class="section-head">
+      <h2>Projetos</h2>
+    </div>
 
-        <h2 class="text-2xl font-semibold text-slate-700">
-            Meus interesses
-        </h2>
+    <div class="cards">
 
-        <ul class="bg-slate-100 p-4 rounded-lg">
-            <li class="hover:text-red-500">Programação</li>
-            <li class="hover:text-red-500">Aprendizado de Máquina</li>
-            <li class="hover:text-red-500">Inteligência Artificial</li>
-            <li class="hover:text-red-500">Engenharia de Software</li>
-        </ul>
+      <div class="card featured">
+        <h3>Vértice Retail — Motor Determinístico + Agente de Diagnóstico</h3>
+        <div class="tags"><span>Python</span><span>FastAPI</span><span>Agente ReAct</span><span>testes automatizados</span></div>
+        <p>Sistema de análise de margem para varejo: um motor de cálculo 100% determinístico e testado, combinado com um agente que investiga hipóteses de queda de margem e recomenda ações com impacto financeiro estimado. Toda a aritmética vem de ferramentas Python auditáveis — o LLM interpreta, mas nunca calcula. Inclui roteador de intenção, verificação numérica de respostas, API FastAPI e testes automatizados.</p>
+        <a class="repo" href="https://github.com/naclarap/Case-Vertice-Bootcamp.git" target="_blank">ver repositório →</a>
+      </div>
+
+      <div class="card">
+        <h3>ComandX</h3>
+        <p>Sistema com arquitetura orientada a serviços, desenvolvido aplicando os pilares da engenharia de software do início ao fim: levantamento de requisitos, documentação e gestão via Kanban. Implementação do padrão Factory e testes automatizados com Qt Test.</p>
+        <div class="tags"><span>C++</span><span>Qt</span><span>Factory Pattern</span><span>Kanban</span><span>Qt Test</span></div>
+        <a class="repo" href="https://github.com/naclarap/comandx" target="_blank">ver repositório →</a>
+      </div>
+
+      <div class="card">
+        <h3>Solucionador de Nonogramas — Análise Comparativa</h3>
+        <p>Trabalho de Inteligência Artificial: implementação e comparação de três abordagens para resolver Nonogramas (Picross) — Backtracking com heurística MRV e Forward Checking, Algoritmo Genético e um Modelo Híbrido (AG + Backtracking). Avaliação sobre 64 instâncias, de 5×5 a 100×100, com métricas de tempo de execução, acurácia e número de backtracks.</p>
+        <div class="tags"><span>Python</span><span>IA</span><span>Backtracking</span><span>Algoritmo Genético
+        <a class="repo" href="https://github.com/naclarap/Solucionador-de-Nonograma.git" target="_blank">ver repositório →</a>
+      </div>
+
+      <div class="card">
+        <h3>Teoria dos Sistemas</h3>
+        <p>Projeto Desenvolvido na disciplina de Engenharia de Software, com Sprints semanais. Aplicação em C++/Qt construída sobre o idioma Handle-Body, separando interface e implementação.</p>
+        <div class="tags"><span>C++</span><span>Qt</span><span>Handle-Body</span></div>
+        <a class="repo" href="https://github.com/naclarap/Engenharia-de-Software-I---Teoria-dos-Sistemas.git" target="_blank">ver repositório →</a>
+      </div>
 
     </div>
+  </section>
+
+  <section id="pesquisa">
+    <div class="section-head">
+      <h2>Pesquisa</h2>
+      <p>Iniciações Científicas.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Detecção Eficiente de Violência em Vídeos de Vigilância</h3>
+        <p>Iniciação Científica em andamento: detecção de violência a partir de imagens dinâmicas e destilação de conhecimento.</p>
+        <div class="tags"><span>Python</span><span>PyTorch</span><span>Visão Computacional</span><span>Machine Learning</span><span>Iniciação Científica</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Curso de Lógica de Programação — STEMina</h3>
+        <p>Desenvolvimento de um curso de lógica de programação para meninas do ensino fundamental e médio, no programa STEMina, parceria entre UFOP e UFSC.</p>
+        <div class="tags"><span>Educação</span><span>Scratch</span><span>Lógica de Programação</span><span>Iniciação Científica Concluída</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trajetoria">
+    <div class="section-head">
+      <h2>Trajetória</h2>
+    </div>
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div>
+        <div class="when">ago/2025 – atualmente</div>
+        <strong>Bolsista de Iniciação Científica — Detecção Eficiente de Violência em Vídeos de Vigilância</strong>
+        <p>Detecção de Violência em Vídeos utilizando Imagens Dinamicas e Destilação de Conhecimento.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div>
+        <div class="when">mai/2025 – mai/2026</div>
+        <strong>Bolsista de Iniciação Científica — STEMina</strong>
+        <p>Produção de curso de lógica de programação para o programa STEMina da UFSC.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div>
+        <div class="when">mar/2025 – jun/2025</div>
+        <strong>Voluntária — Extensão em equidade de gênero em STEM</strong>
+        <p>Projeto de extensão da UFOP.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div>
+        <div class="when">dez/2024 – abr/2025</div>
+        <strong>Monitora de Matemática Discreta I</strong>
+        <p>Universidade Federal de Ouro Preto.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <footer id="contato">
+    <div class="contact-card">
+      <h2>Vamos conversar?</h2>
+      <p class="blurb">Aberta a oportunidades em desenvolvimento backend e engenharia de software.</p>
+      <div class="contact-links">
+        <a href="mailto:anacpesperanca@gmail.com">anacpesperanca@gmail.com</a>
+        <a href="tel:+5533998407450">Contato</a>
+        <a href="https://www.linkedin.com/in/ana-clara-esperança-574831186" target="_blank">LinkedIn</a>
+        <a href="https://github.com/naclarap" target="_blank">GitHub</a>
+      </div>
+    </div>
+    <p class="fine" style="text-align:center;">Ouro Preto, MG — Brasil</p>
+  </footer>
+
+</div>
 
 </body>
 </html>
